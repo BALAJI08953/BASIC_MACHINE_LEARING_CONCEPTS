@@ -1,0 +1,331 @@
+LINEAR ALGEBRA FORMULA SHEET — ML + QUANTUM COMPUTING
+
+1. VECTORS / NORM / INNER PRODUCT
+Norm:
+||x||_2 = sqrt(x^T x) = sqrt(sum x_i^2)
+
+Inner product:
+<x,y> = x^T y                  (real)
+<x,y> = x^dagger y             (complex)
+
+Orthogonality:
+x^T y = 0                      (real)
+x^dagger y = 0                 (complex)
+
+Orthonormal:
+orthogonal + unit norm
+
+2. BASIS / DIMENSION
+Linear dependence:
+c1 v1 + ... + cn vn = 0, with at least one ci != 0
+
+Basis:
+linearly independent + spans the space
+
+Dimension:
+dim(V) = number of vectors in a basis
+
+3. SUBSPACES / RANK
+Null space:
+Null(A) = {x : Ax = 0}
+
+Rank:
+rank(A) = number of pivots
+        = number of independent rows
+        = number of independent columns
+
+Rank-nullity:
+rank(A) + nullity(A) = number of columns of A
+
+Orthogonality:
+Row(A) ⟂ Null(A)
+Col(A) ⟂ Null(A^T)
+
+4. PROJECTION
+Projection of b onto a:
+proj_a(b) = (a^T b / a^T a) a
+
+If a is a unit vector:
+proj_a(b) = (a^T b) a
+
+Projection matrix onto span(a):
+P = a a^T / (a^T a)
+
+Using orthonormal basis Q:
+P = Q Q^T
+
+5. LEAST SQUARES / REGRESSION
+Least-squares objective:
+min ||Ax - b||_2^2
+
+Normal equation:
+A^T A x = A^T b
+
+Least-squares solution, when A^T A is invertible:
+x = (A^T A)^(-1) A^T b
+
+Simple linear regression:
+y_hat = m x + b
+
+Slope:
+m = sum[(x_i-x_bar)(y_i-y_bar)] / sum[(x_i-x_bar)^2]
+
+Intercept:
+b = y_bar - m x_bar
+
+Residual:
+e_i = y_i - y_hat_i
+
+SSE:
+SSE = sum (y_i-y_hat_i)^2
+
+MSE:
+MSE = (1/n) sum (y_i-y_hat_i)^2
+
+Multiple regression:
+y_hat = Xw
+(or Xtheta when intercept is included in X)
+
+SVD-based least squares:
+If X = U Sigma V^T,
+w = V Sigma^+ U^T y
+
+6. DETERMINANT / INVERSE
+For A = [[a,b],[c,d]]:
+det(A) = ad - bc
+
+Invertibility:
+det(A) != 0  <=>  A is invertible
+
+Singular:
+det(A) = 0  <=>  A is not invertible
+
+Inverse:
+A A^(-1) = I
+
+2x2 inverse:
+A^(-1) = 1/(ad-bc) [[d,-b],[-c,a]]
+
+Gauss-Jordan:
+[A | I] -> [I | A^(-1)]
+
+7. LU
+A = L U
+
+L = lower triangular
+U = upper triangular
+
+8. EIGENVALUES / EIGENVECTORS
+Eigenvalue equation:
+A v = lambda v
+
+Characteristic equation:
+det(A - lambda I) = 0
+
+Eigenvectors:
+(A - lambda I)v = 0
+
+Algebraic multiplicity:
+number of times lambda occurs in characteristic polynomial
+
+Geometric multiplicity:
+number of linearly independent eigenvectors for lambda
+
+Always:
+1 <= GM <= AM
+
+9. DIAGONALIZATION
+A = Q Lambda Q^(-1)
+
+Q = eigenvectors as columns
+Lambda = eigenvalues on diagonal
+
+Matrix powers:
+A^k = Q Lambda^k Q^(-1)
+
+10. SPECTRAL THEOREM
+Real symmetric:
+A = A^T
+
+Spectral decomposition:
+A = Q Lambda Q^T
+
+Complex Hermitian:
+A = A^dagger
+
+Hermitian spectral form:
+A = U Lambda U^dagger
+
+11. ORTHOGONAL / UNITARY
+Orthogonal:
+Q^T Q = I
+Q^(-1) = Q^T
+
+Norm preservation:
+||Qx|| = ||x||
+
+Unitary:
+U^dagger U = I
+U^(-1) = U^dagger
+
+12. HERMITIAN
+A = A^dagger
+
+Hermitian matrices have real eigenvalues.
+
+13. PSD / PD
+Positive semidefinite:
+x^T A x >= 0 for every x
+
+Positive definite:
+x^T A x > 0 for every nonzero x
+
+For symmetric A:
+PSD <=> all eigenvalues >= 0
+PD  <=> all eigenvalues > 0
+
+14. CHOLESKY
+A = L L^T
+
+Typically for symmetric positive-definite A.
+
+15. SCHUR
+A = Q T Q^dagger
+
+Q = unitary
+T = upper triangular
+Eigenvalues appear on diagonal of T
+
+16. HESSIAN
+H_ij = partial^2 f / (partial x_i partial x_j)
+
+For two variables:
+H = [[f_xx, f_xy],
+     [f_yx, f_yy]]
+
+Hessian = curvature of a multivariable function.
+
+17. SVD
+A = U Sigma V^T
+
+U = left singular vectors
+Sigma = singular values
+V = right singular vectors
+
+A^T A v_i = sigma_i^2 v_i
+
+sigma_i = sqrt(eigenvalue_i(A^T A))
+
+18. PCA
+Center data:
+X_c = X - mean
+
+Covariance:
+C = (1/(n-1)) X_c^T X_c
+
+PCA eigenproblem:
+C v = lambda v
+
+SVD for PCA:
+X_c = U Sigma V^T
+
+Principal directions:
+columns of V
+
+PCA coordinates:
+Z = X_c V = U Sigma
+
+Covariance eigenvalue from singular value:
+lambda_i = sigma_i^2 / (n-1)
+
+19. LOW-RANK APPROXIMATION
+A_k = U_k Sigma_k V_k^T
+
+Keep k largest singular values.
+
+Best rank-k spectral error:
+||A-A_k||_2 = sigma_(k+1)
+
+Best rank-k Frobenius error:
+||A-A_k||_F = sqrt(sum of squared discarded singular values)
+
+20. IMAGE COMPRESSION
+Image = pixel-value matrix A
+
+SVD compression:
+A ≈ U_k Sigma_k V_k^T
+
+Keep largest singular components.
+
+21. TRANSITION MATRICES
+P_ij = P(X_(t+1)=j | X_t=i)
+
+Row-vector convention:
+v_(t+1) = v_t P
+
+n steps:
+v_n = v_0 P^n
+
+Steady state:
+vP = v
+
+22. MONTE CARLO
+Probability estimate:
+p_hat = successes / total trials
+
+Monte Carlo mean:
+mu_hat = (1/N) sum f(X_i)
+
+23. QUANTUM CORE
+State normalization:
+<psi|psi> = 1
+
+Quantum evolution:
+|psi'> = U |psi>
+
+Unitary gate:
+U^dagger U = I
+
+Orthogonal states:
+<psi|phi> = 0
+
+Observable eigenvalue equation:
+A |psi> = a |psi>
+
+Hermitian observable:
+A = A^dagger
+
+QUICK DISTINCTIONS
+Eigen:
+A v = lambda v
+eigenvector = special direction
+eigenvalue = scaling factor
+
+Diagonalization:
+A = Q Lambda Q^(-1)
+
+SVD:
+A = U Sigma V^T
+U,V = singular vectors
+Sigma = singular values
+
+PCA:
+finds directions of maximum variance
+
+Regression:
+predicts y from X by minimizing squared error
+
+PSD:
+x^T A x >= 0
+
+Unitary:
+U^dagger U = I
+
+Cholesky:
+A = L L^T
+
+Schur:
+A = Q T Q^dagger
+
+Hessian:
+second-derivative matrix / curvature
